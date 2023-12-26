@@ -13,10 +13,30 @@ spring:
     gateway:
       mvc:
         routes:
-          - id: category-service-flipkart-demo
+          - id: category-service-flipkart-demo-public
             uri: lb://category-service-flipkart-demo
             predicates:
-              - Path=/category/**
+              - Path=/public/category/**
+          - id: category-service-flipkart-demo-private
+            uri: lb://category-service-flipkart-demo
+            predicates:
+              - Path=/protected/category/**
+          - id: category-service-flipkart-demo-protected
+            uri: lb://category-service-flipkart-demo
+            predicates:
+              - Path=/protected/category/**
+          - id: product-mq-producer-public
+            uri: lb://product-mq-producer
+            predicates:
+              - Path=/public/product/**
+          - id: product-mq-producer-private
+            uri: lb://product-mq-producer
+            predicates:
+              - Path=/private/product/**
+          - id: product-mq-producer-protected
+            uri: lb://product-mq-producer
+            predicates:
+              - Path=/protected/product/**
   data:
     mongodb:
       uri: mongodb://localhost:27017/

@@ -44,9 +44,9 @@ public class SecurityConfig {
 	@Bean
 	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http.csrf(csrf -> csrf.disable())
-				.authorizeHttpRequests(authorizeRequests -> authorizeRequests.requestMatchers("/category/protected/**")
-						.hasRole("ADMIN").requestMatchers("/category/private/**").hasAnyRole("ADMIN", "CONSUMER")
-						.requestMatchers("/actuator/**", "/category/public/**").permitAll().requestMatchers("/user/**")
+				.authorizeHttpRequests(authorizeRequests -> authorizeRequests.requestMatchers("/protected/**")
+						.hasRole("ADMIN").requestMatchers("/private/**").hasAnyRole("ADMIN", "CONSUMER")
+						.requestMatchers("/actuator/**", "/public/**").permitAll().requestMatchers("/user/**")
 						.hasAnyRole("ADMIN", "USER").anyRequest().authenticated())
 				.httpBasic(t -> t.authenticationEntryPoint(authenticationEntryPoint()))
 				.userDetailsService(mongoUserDetails());
