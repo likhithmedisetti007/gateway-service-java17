@@ -1,0 +1,63 @@
+spring:
+  application:
+    name: gateway-service-java17
+  security:
+    user:
+      name: Likhith
+      password: Likhith
+      roles:
+      - USER
+      - ADMIN
+      - CONSUMER
+  cloud:
+    gateway:
+      mvc:
+        routes:
+          - id: category-service-flipkart-demo
+            uri: lb://category-service-flipkart-demo
+            predicates:
+              - Path=/category/**
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/
+      database: InternalAssignment
+            
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      default-zone: "http://localhost:8761/eureka"
+  instance:
+    hostname: localhost
+    instance-id: ${eureka.instance.hostname}:${server.port}
+    lease-renewal-interval-in-seconds: 5
+    lease-expiration-duration-in-seconds: 10
+    status-page-url-path: /actuator/health
+    
+logging:
+  pattern:
+    level: "%5p [${spring.application.name},%X{traceId:-},%X{spanId:-}]"
+  level:
+    org.springframework.security: DEBUG
+    org.springframework.web: DEBUG
+    org.springframework.data.mongodb.core.MongoTemplate: DEBUG
+    
+server:
+  port: 9008
+  
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  tracing:
+    sampling:
+      probability: 1.0
+      
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui
+    operations-sorter: method
